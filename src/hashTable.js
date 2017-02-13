@@ -1,18 +1,18 @@
 class Node{
-  constructor() {
-    this.key = 0,
-    this.data = 0,
+  constructor(key, data) {
+    this.key = key,
+    this.data = data,
     this.next = null
   }
 }
 
 export default class Hashtable{
   constructor(){
-    this._length,
+    this._length = 0,
     this.dataStore = []
   }
 
-  hashFunction(key) {
+  hashFunction(key){
     let sum = 0
     for (let i = 0; i < key.length; i++) {
       sum += key.charCodeAt(i)
@@ -20,44 +20,70 @@ export default class Hashtable{
     return sum % 31
   }
 
-  chain(){
-    //iterate through the linkedlist until you reach a node whos next is null.
-    //set that next to the new node that is created.
-  }
+  size(){ return this._length }
 
-<<<<<<< Updated upstream
-  put(id, data){
-    let hash = hashFunction(id)
-=======
-  put(key, data){
-    let hash = this.hashFunction(key)
->>>>>>> Stashed changes
-    //see if hash # exists on the hash table.
-    if(!this.dataStore.contains(hash)){
-      //if it doesnt, create a new hash index in the table and put data there.
-
-    }else{
-      //otherwise chain off the lead hash into a linkedlist.
-<<<<<<< Updated upstream
-      
-=======
-
->>>>>>> Stashed changes
+  chain(key, data, hash, newNode){
+    let currentNode = this.dataStore[hash]
+      //set that next to the new node that is created.
+      if(!currentNode.next){
+        currentNode.next = newNode
+      }else{
+        while(currentNode.next){
+          //iterate through the linkedlist until you reach a node whos next is null.
+          if(currentNode.key === key){
+            return currentNode.data = data
+          }else{
+            currentNode = currentNode.next
+          }
+      }
+      currentNode.next = newNode
     }
   }
 
-  get(){
-    //finds the indexed hash number and looks at the key to locate the correct node.
-    //returns that node's data.
+  put(key, data){
+    let newNode = new Node(key, data)
+    let hash = this.hashFunction(key)
+    //see if hash # exists on the hash table.
+    if(!this.dataStore[hash]){
+      //if it doesnt, create a new hash index in the table and put data there.
+      this.dataStore[hash] = newNode
+    }else{
+      //otherwise chain off the lead hash into a linkedlist.
+      this.chain(key, data, hash, newNode)
+    }
+    ++this._length
   }
 
-<<<<<<< Updated upstream
-  contains(){
-    //returns a boolean that state whether or not the hashtable contains that key.
-=======
+  get(key){
+    let hash = this.hashFunction(key)
+    //finds the indexed hash number and looks at the key to locate the correct node.
+    if(this.dataStore[hash]){
+      let currentNode = this.dataStore[hash]
+      if(currentNode.key === key){
+        //returns that node's data.
+        return currentNode.data
+      }else{
+        while(currentNode.next){
+          if(currentNode.key === key){
+            //returns that node's data.
+            return currentNode.data
+          }else{
+            currentNode = currentNode.next
+          }
+        }
+        if(currentNode.key === key){
+          //returns that node's data.
+          return currentNode.data
+        }else{
+          return "sorry your data is not here"
+        }
+      }
+    }
+  }
+
   contains(key){
     let hash = this.hashFunction(key)
-    let currentNode = hash
+    let currentNode = this.dataStore[hash]
     //returns a boolean that state whether or not the hashtable contains that key.
     if(this.dataStore[hash]){
       while(currentNode.next){
@@ -67,13 +93,30 @@ export default class Hashtable{
           currentNode = currentNode.next
         }
       }
+      if(currentNode.key === key){
+        return true
+      }else{
+        return false
+      }
+    }else{
+      return false
     }
-    return false
->>>>>>> Stashed changes
   }
 
-  iterate(){
+  iterator(callback){
+    let i = 0
     //moves throughout the hashtable in a determined fashion.
+    let currentNode = this.dataStore
+    while(i < this.dataStore.length){
+      if(currentNode[i]){
+        callback(currentNode[i].key, currentNode[i].data)
+        while(currentNode[i].next){
+          callback(currentNode[i].next.key, currentNode[i].next.data)
+          currentNode[i] = currentNode[i].next
+        }
+      }
+      i++
+    }
   }
 
   remove(){
@@ -81,7 +124,4 @@ export default class Hashtable{
     //removes that hash from the table without breaking any other connections.
   }
 
-  size(){
-    //returns the number of key stored hashes in the table.
-  }
 }
