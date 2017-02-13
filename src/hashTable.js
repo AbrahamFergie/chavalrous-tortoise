@@ -25,15 +25,24 @@ export default class Hashtable{
     //set that next to the new node that is created.
   }
 
+<<<<<<< Updated upstream
   put(id, data){
     let hash = hashFunction(id)
+=======
+  put(key, data){
+    let hash = this.hashFunction(key)
+>>>>>>> Stashed changes
     //see if hash # exists on the hash table.
     if(!this.dataStore.contains(hash)){
       //if it doesnt, create a new hash index in the table and put data there.
 
     }else{
       //otherwise chain off the lead hash into a linkedlist.
+<<<<<<< Updated upstream
       
+=======
+
+>>>>>>> Stashed changes
     }
   }
 
@@ -42,8 +51,25 @@ export default class Hashtable{
     //returns that node's data.
   }
 
+<<<<<<< Updated upstream
   contains(){
     //returns a boolean that state whether or not the hashtable contains that key.
+=======
+  contains(key){
+    let hash = this.hashFunction(key)
+    let currentNode = hash
+    //returns a boolean that state whether or not the hashtable contains that key.
+    if(this.dataStore[hash]){
+      while(currentNode.next){
+        if(currentNode.key === key){
+          return true
+        }else{
+          currentNode = currentNode.next
+        }
+      }
+    }
+    return false
+>>>>>>> Stashed changes
   }
 
   iterate(){
