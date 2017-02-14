@@ -12,6 +12,7 @@ export default class Hashtable{
     this.dataStore = []
   }
 
+  //takes a key and returns a hash number which will be where the hash will live.
   hashFunction(key){
     let sum = 0
     for (let i = 0; i < key.length; i++) {
@@ -19,27 +20,11 @@ export default class Hashtable{
     }
     return sum % 31
   }
-
+  //get the number of hashes in your hash table.
   size(){ return this._length }
 
-  chain(key, data, hash, newNode){
-    let currentNode = this.dataStore[hash]
-      //set that next to the new node that is created.
-      if(!currentNode.next){
-        currentNode.next = newNode
-      }else{
-        while(currentNode.next){
-          //iterate through the linkedlist until you reach a node whos next is null.
-          if(currentNode.key === key){
-            return currentNode.data = data
-          }else{
-            currentNode = currentNode.next
-          }
-      }
-      currentNode.next = newNode
-    }
-  }
 
+  //creates a new hash or chains off an existing hash.
   put(key, data){
     let newNode = new Node(key, data)
     let hash = this.hashFunction(key)
@@ -81,6 +66,26 @@ export default class Hashtable{
     }
   }
 
+  //creates a linked-list at that designated hash location.
+  chain(key, data, hash, newNode){
+    let currentNode = this.dataStore[hash]
+    //set that next to the new node that is created.
+    if(!currentNode.next){
+      currentNode.next = newNode
+    }else{
+      while(currentNode.next){
+        //iterate through the linkedlist until you reach a node whos next is null.
+        if(currentNode.key === key){
+          return currentNode.data = data
+        }else{
+          currentNode = currentNode.next
+        }
+      }
+      currentNode.next = newNode
+    }
+  }
+
+  //checks if a given key exists on a hash table.
   contains(key){
     let hash = this.hashFunction(key)
     let currentNode = this.dataStore[hash]
@@ -103,6 +108,7 @@ export default class Hashtable{
     }
   }
 
+  //iterates throughout the hash table using a callback function on each hash and hash chain.
   iterator(callback){
     let i = 0
     //moves throughout the hashtable in a determined fashion.
@@ -119,6 +125,7 @@ export default class Hashtable{
     }
   }
 
+  //finds the designated hash in the table if it exists, them removes hash without breaking chains.
   remove(key){
     let toBeDeleted
     let hash = this.hashFunction(key)
