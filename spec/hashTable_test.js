@@ -13,15 +13,8 @@ describe('hashTable', () => {
     it('adds a key-value pair to the hash table.', () => {
       const ht = new HashTable()
       ht.put('name', 'frankenstein')
-      expect(ht.size()).to.equal(1)
       ht.put('19.0', 'stein')
-      expect(ht.size()).to.equal(2)
-      ht.put('wsqe', 'frank')
-      ht.put('tomp', 'more data')
-      ht.put('separate', 'hashes')
-      ht.put('difdeaaat', 'another one')
-      expect(ht.contains('tomp')).to.be.true
-      let stuff = ht.hashFunction('difdeaaat')
+      expect(ht.contains('19.0')).to.be.true
     })
   })
 
@@ -29,14 +22,11 @@ describe('hashTable', () => {
     it('returns the data associated with key.', () => {
       const ht = new HashTable()
       ht.put('name', 'frankenstein')
-      expect(ht.size()).to.equal(1)
       ht.put('19.0', 'stein')
-      expect(ht.size()).to.equal(2)
       ht.put('wsqe', 'frank')
       ht.put('tomp', 'more data')
       ht.put('separate', 'hashes')
       ht.put('difdeaaat', 'another one')
-      console.log(ht.dataStore)
       expect(ht.get('separate')).to.eql('hashes')
       expect(ht.get('wsqe')).to.eql('frank')
       expect(ht.get('difdeaaat')).to.eql('another one')
@@ -44,32 +34,31 @@ describe('hashTable', () => {
   })
 
   context('iterator()', () => {
-    it('takes a callback function and passes it each key and value in sequence.', () => {
+    it.only('takes a callback function and passes it each key and value in sequence.', () => {
       const ht = new HashTable()
-      ht.put('name', 'frankenstein')
-      expect(ht.size()).to.equal(1)
-      ht.put('19.0', 'stein')
-      expect(ht.size()).to.equal(2)
-      ht.put('wsqe', 'frank')
-      ht.put('tomp', 'more data')
-      ht.put('separate', 'hashes')
-      ht.put('difdeaaat', 'another one')
-      ht.iterator(function(key, data){console.log(key, data)})
+      let sum = 0
+      ht.put('name', 2)
+      ht.put('19.0', 3)
+      ht.put('wsqe', 4)
+      ht.put('tomp', 6)
+      ht.put('separate', 12)
+      ht.put('difdeaaat', 31)
+      ht.iterator(function(key, data){ sum += data })
+      expect(sum).to.equal(58)
     })
   })
 
   context('remove()', () => {
-    it.only('removes a key-value pair by key.', () => {
+    it('removes a key-value pair by key.', () => {
       const ht = new HashTable()
       ht.put('name', 'frankenstein')
-      expect(ht.size()).to.equal(1)
       ht.put('19.0', 'stein')
-      expect(ht.size()).to.equal(2)
       ht.put('wsqe', 'frank')
       ht.put('tomp', 'more data')
       ht.put('separate', 'hashes')
       ht.put('difdeaaat', 'another one')
       expect(ht.contains('tomp')).to.be.true
+      expect(ht.contains('name')).to.be.true
       ht.remove('tomp')
       ht.remove('name')
       expect(ht.contains('tomp')).to.be.false

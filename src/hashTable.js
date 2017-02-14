@@ -34,7 +34,7 @@ export default class Hashtable{
       this.dataStore[hash] = newNode
     }else{
       //otherwise chain off the lead hash into a linkedlist.
-      this.chain(key, data, hash, newNode)
+      this.chain(hash, newNode)
     }
     ++this._length
   }
@@ -67,22 +67,10 @@ export default class Hashtable{
   }
 
   //creates a linked-list at that designated hash location.
-  chain(key, data, hash, newNode){
-    let currentNode = this.dataStore[hash]
-    //set that next to the new node that is created.
-    if(!currentNode.next){
-      currentNode.next = newNode
-    }else{
-      while(currentNode.next){
-        //iterate through the linkedlist until you reach a node whos next is null.
-        if(currentNode.key === key){
-          return currentNode.data = data
-        }else{
-          currentNode = currentNode.next
-        }
-      }
-      currentNode.next = newNode
-    }
+  chain(hash, newNode) {
+    //set the newNode as the head node in the hash table
+    newNode.next = this.dataStore[hash]
+    this.dataStore[hash] = newNode
   }
 
   //checks if a given key exists on a hash table.
@@ -151,3 +139,19 @@ export default class Hashtable{
   }
 
 }
+// chain(key, data, hash, newNode){
+//   let currentNode = this.dataStore[hash]
+//   if(!currentNode.next){
+//     currentNode.next = newNode
+//   }else{
+//     while(currentNode.next){
+//       //iterate through the linkedlist until you reach a node whos next is null.
+//       if(currentNode.key === key){
+//         return currentNode.data = data
+//       }else{
+//         currentNode = currentNode.next
+//       }
+//     }
+//     currentNode.next = newNode
+//   }
+// }
