@@ -44,7 +44,7 @@ describe('hashTable', () => {
   })
 
   context('iterator()', () => {
-    it.only('takes a callback function and passes it each key and value in sequence.', () => {
+    it('takes a callback function and passes it each key and value in sequence.', () => {
       const ht = new HashTable()
       ht.put('name', 'frankenstein')
       expect(ht.size()).to.equal(1)
@@ -55,6 +55,25 @@ describe('hashTable', () => {
       ht.put('separate', 'hashes')
       ht.put('difdeaaat', 'another one')
       ht.iterator(function(key, data){console.log(key, data)})
+    })
+  })
+
+  context('remove()', () => {
+    it.only('removes a key-value pair by key.', () => {
+      const ht = new HashTable()
+      ht.put('name', 'frankenstein')
+      expect(ht.size()).to.equal(1)
+      ht.put('19.0', 'stein')
+      expect(ht.size()).to.equal(2)
+      ht.put('wsqe', 'frank')
+      ht.put('tomp', 'more data')
+      ht.put('separate', 'hashes')
+      ht.put('difdeaaat', 'another one')
+      expect(ht.contains('tomp')).to.be.true
+      ht.remove('tomp')
+      ht.remove('name')
+      expect(ht.contains('tomp')).to.be.false
+      expect(ht.contains('name')).to.be.false
     })
   })
 

@@ -119,9 +119,28 @@ export default class Hashtable{
     }
   }
 
-  remove(){
+  remove(key){
+    let toBeDeleted
+    let hash = this.hashFunction(key)
     //moves throughout the hashtable to find a specific hash by its key.
-    //removes that hash from the table without breaking any other connections.
+    if(this.dataStore[hash]){
+      let currentNode = this.dataStore[hash]
+      if(currentNode.key === key){
+        //removes that hash from the table without breaking any other connections.
+        this.dataStore[hash] = currentNode.next
+      }else{
+        while(currentNode.next){
+          if(currentNode.next.key === key){
+            currentNode.next = currentNode.next.next
+          }else{
+            currentNode = currentNode.next
+          }
+        }
+      }
+
+    }else{
+      return "does not exist on table"
+    }
   }
 
 }
