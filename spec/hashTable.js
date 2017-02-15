@@ -59,7 +59,7 @@ describe('hashTable', () => {
   })
 
   context('remove()', () => {
-    it.only('removes a key-value pair by key.', () => {
+    it('removes a key-value pair by key.', () => {
       const ht = new HashTable()
       ht.put('name', 'frankenstein')
       expect(ht.size()).to.equal(1)
