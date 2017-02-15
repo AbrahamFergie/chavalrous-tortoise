@@ -61,6 +61,6 @@ describe('binaryTree', () => {
       console.log(myTree.tree)
     })
   })
-
+  
 
 })
