@@ -34,7 +34,7 @@ describe('hashTable', () => {
   })
 
   context('iterator()', () => {
-    it.only('takes a callback function and passes it each key and value in sequence.', () => {
+    it('takes a callback function and passes it each key and value in sequence.', () => {
       const ht = new HashTable()
       let sum = 0
       ht.put('name', 2)
