@@ -14,5 +14,8 @@
   "scripts": {
     "build": "babel src -d lib",
     "test": "mocha --compilers js:babel-register ./spec/*.js"
+  },
+  "dependencies": {
+    "chalk": "^1.1.3"
   }
 }
